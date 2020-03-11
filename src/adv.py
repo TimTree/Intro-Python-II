@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,47 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("You", room['outside'])
+
+print("-------------------")
+print("TEXT ADVENTURE GAME")
+print("-------------------\n")
+print(f"Welcome, {player.name}")
+
+choices = ['n', 's', 'e', 'w']
+
+# LOOP
+while True:
+    # PRINT
+    print(f"\nCurrently in: {player.current_room.name}")
+    print(f"{player.current_room.description}")
+    # READ
+    cmd = input("\nEnter direction (n, s, e, w, q to quit): ")
+    # EVAL
+    # If q, quit the loop
+    if cmd == "q":
+        print("\nGoodbye!")
+        break
+    elif cmd == "n":
+        if player.current_room.n_to is not None:
+            player.current_room = player.current_room.n_to
+        else:
+            print("\nThere is no room further north.")
+    elif cmd == "s":
+        if player.current_room.s_to is not None:
+            player.current_room = player.current_room.s_to
+        else:
+            print("\nThere is no room further south.")
+    elif cmd == "e":
+        if player.current_room.e_to is not None:
+            player.current_room = player.current_room.e_to
+        else:
+            print("\nThere is no room further east.")
+    elif cmd == "w":
+        if player.current_room.w_to is not None:
+            player.current_room = player.current_room.w_to
+        else:
+            print("\nThere is no room further west.")
+    else:
+        print("I did not understand that command\n")
