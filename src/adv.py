@@ -70,12 +70,19 @@ while True:
 
     # READ
     cmd = input("\nEnter direction (options above, or q to quit): ")
+    cmd = cmd.split()
     # EVAL
     # If q, quit the loop
-    if cmd == "q":
+    if cmd[0] == "q":
         print("\nGoodbye!\n")
         break
-    elif cmd in choices:
-        player.travel(cmd)
+    elif cmd[0] in choices:
+        player.travel(cmd[0])
+    elif cmd[0] == "i":
+        player.printInventory()
+    elif cmd[0] == "get" or cmd[0] == "take":
+        player.getItem(cmd[1])
+    elif cmd[0] == "drop":
+        player.dropItem(cmd[1])
     else:
         print("I did not understand that command\n")

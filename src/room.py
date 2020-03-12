@@ -20,7 +20,7 @@ class Room(Item):
         return_string += "\n"
         return_string += self.description
         return_string += "\n\n"
-        return_string += "Available items: "
+        return_string += "Items in room: "
         return_string += ", ".join(x for x in self.getItemNames())
         return_string += "\n"
         return_string += f"{self.get_exits_string()}"
