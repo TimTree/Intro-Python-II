@@ -5,7 +5,11 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     [
+                         ['food', 'you eat it'],
+                         ['drink', 'you drink it'],
+                     ]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -56,41 +60,22 @@ player = Player("You", room['outside'])
 print("-------------------")
 print("TEXT ADVENTURE GAME")
 print("-------------------\n")
-print(f"Welcome, {player.name}")
+print(f"Welcome, {player.name}\n")
+print(player.current_room)
 
-choices = ['n', 's', 'e', 'w']
+choices = ('n', 's', 'e', 'w')
 
 # LOOP
 while True:
-    # PRINT
-    print(f"\nCurrently in: {player.current_room.name}")
-    print(f"{player.current_room.description}")
+
     # READ
-    cmd = input("\nEnter direction (n, s, e, w, q to quit): ")
+    cmd = input("\nEnter direction (options above, or q to quit): ")
     # EVAL
     # If q, quit the loop
     if cmd == "q":
-        print("\nGoodbye!")
+        print("\nGoodbye!\n")
         break
-    elif cmd == "n":
-        if player.current_room.n_to is not None:
-            player.current_room = player.current_room.n_to
-        else:
-            print("\nThere is no room further north.")
-    elif cmd == "s":
-        if player.current_room.s_to is not None:
-            player.current_room = player.current_room.s_to
-        else:
-            print("\nThere is no room further south.")
-    elif cmd == "e":
-        if player.current_room.e_to is not None:
-            player.current_room = player.current_room.e_to
-        else:
-            print("\nThere is no room further east.")
-    elif cmd == "w":
-        if player.current_room.w_to is not None:
-            player.current_room = player.current_room.w_to
-        else:
-            print("\nThere is no room further west.")
+    elif cmd in choices:
+        player.travel(cmd)
     else:
         print("I did not understand that command\n")
