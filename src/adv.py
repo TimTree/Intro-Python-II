@@ -1,10 +1,15 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     [
+                         ['food', 'you eat it'],
+                         ['drink', 'you drink it'],
+                     ]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +54,35 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("You", room['outside'])
+
+print("-------------------")
+print("TEXT ADVENTURE GAME")
+print("-------------------\n")
+print(f"Welcome, {player.name}\n")
+print(player.current_room)
+
+choices = ('n', 's', 'e', 'w')
+
+# LOOP
+while True:
+
+    # READ
+    cmd = input("\nEnter direction (options above, or q to quit): ")
+    cmd = cmd.split()
+    # EVAL
+    # If q, quit the loop
+    if cmd[0] == "q":
+        print("\nGoodbye!\n")
+        break
+    elif cmd[0] in choices:
+        player.travel(cmd[0])
+    elif cmd[0] == "i":
+        player.printInventory()
+    elif cmd[0] == "get" or cmd[0] == "take":
+        player.getItem(cmd[1])
+    elif cmd[0] == "drop":
+        player.dropItem(cmd[1])
+    else:
+        print("I did not understand that command\n")
